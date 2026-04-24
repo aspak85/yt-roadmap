@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>YouTube 2026 – Full Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08081a;--surface:#10102a;--card:#181835;--border:#252550;
+  --orange:#ff6b35;--coral:#ff4757;--purple:#7c4dff;--blue:#2979ff;
+  --teal:#00e5ff;--green:#69f0ae;--yellow:#ffd740;--pink:#ff4081;
+  --txt:#f0f0ff;--txt2:#9090bb;--txt3:#5555aa;
+  --sidebar-w:270px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;min-height:100vh}
+
+/* STARS */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,3s) infinite alternate}
+@keyframes twinkle{from{opacity:.05}to{opacity:var(--o,.5)}}
+
+/* ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;animation:orbF 10s ease-in-out infinite alternate}
+@keyframes orbF{from{transform:translate(0,0)scale(1)}to{transform:translate(20px,15px)scale(1.1)}}
+
+/* SIDEBAR */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
+#overlay.show{opacity:1;pointer-events:all}
+#sidebar{
+  position:fixed;left:0;top:0;height:100%;width:var(--sidebar-w);
+  background:linear-gradient(160deg,#0e0e28 0%,#12122e 60%,#0a0a22 100%);
+  border-right:1px solid var(--border);
+  z-index:300;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+#sidebar.open{transform:translateX(0)}
+.sb-header{
+  padding:1.4rem 1.2rem 1rem;
+  background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(124,77,255,.1));
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.sb-logo{
+  width:52px;height:52px;border-radius:18px;
+  background:linear-gradient(135deg,#ff6b35,#ff4757);
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  box-shadow:0 6px 20px rgba(255,107,53,.4);margin-bottom:.7rem;
+  animation:logoF 4s ease-in-out infinite;
+}
+@keyframes logoF{0%,100%{transform:translateY(0)rotate(0)}50%{transform:translateY(-4px)rotate(-3deg)}}
+.sb-title{font-family:'Baloo 2',sans-serif;font-size:1.1rem;font-weight:800;
+  background:linear-gradient(90deg,#ff6b35,#ff4757);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sb-sub{font-size:.72rem;color:var(--txt3);margin-top:.2rem}
+.sb-nav{flex:1;overflow-y:auto;padding:.8rem 0}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sb-lbl{font-size:.65rem;font-weight:800;color:var(--txt3);text-transform:uppercase;letter-spacing:1.5px;padding:.6rem 1.2rem .3rem}
+.sb-item{
+  display:flex;align-items:center;gap:.8rem;padding:.75rem 1.2rem;
+  cursor:pointer;border:none;background:transparent;width:100%;text-align:left;
+  color:var(--txt2);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;
+  transition:all .2s;border-left:3px solid transparent;
+}
+.sb-item:hover{background:rgba(255,255,255,.04);color:var(--txt)}
+.sb-item.active{color:var(--txt);border-left-color:var(--orange);background:rgba(255,107,53,.08)}
+.sb-ico{font-size:1.2rem;min-width:26px;text-align:center}
+.sb-badge{margin-left:auto;padding:.15rem .5rem;border-radius:50px;font-size:.65rem;font-weight:800;background:rgba(255,107,53,.18);color:var(--orange)}
+.sb-footer{padding:1rem 1.2rem;border-top:1px solid var(--border);flex-shrink:0}
+.sb-close{width:100%;padding:.6rem;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--txt2);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.sb-close:hover{background:rgba(255,71,87,.1);border-color:var(--coral);color:var(--coral)}
+
+/* TOPBAR */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:56px;
+  background:rgba(8,8,26,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:.8rem;padding:0 1rem;
+}
+.tb-menu{
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--border);
+  background:rgba(255,255,255,.05);cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;flex-shrink:0;transition:all .2s;
+}
+.tb-menu:hover{background:rgba(255,107,53,.12);border-color:var(--orange)}
+.tb-menu span{width:18px;height:2px;background:var(--txt);border-radius:2px;transition:all .3s}
+.tb-menu.open span:nth-child(1){transform:rotate(45deg)translateY(7px)}
+.tb-menu.open span:nth-child(2){opacity:0}
+.tb-menu.open span:nth-child(3){transform:rotate(-45deg)translateY(-7px)}
+.tb-brand{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1rem;
+  background:linear-gradient(90deg,#ff6b35,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex:1}
+.tb-back{
+  display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(255,255,255,.05);cursor:pointer;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--txt2);transition:all .2s;flex-shrink:0;
+}
+.tb-back:hover{background:rgba(124,77,255,.15);border-color:var(--purple);color:var(--txt)}
+.tb-back.show{display:flex}
+
+/* PAGES */
+#app{padding-top:56px;min-height:100vh;position:relative;z-index:1}
+.page{display:none;animation:pgIn .35s ease}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+
+/* DASHBOARD */
+.dash-hero{min-height:calc(100vh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5rem 1rem 3rem;overflow:hidden;position:relative}
+
+/* POSTERS */
+.poster-wrap{width:calc(100% + 2rem);margin-left:-1rem;margin-bottom:1.8rem;position:relative}
+.poster-track{display:flex;gap:.9rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:.5rem 1rem 1rem;scroll-behavior:smooth}
+.poster-track::-webkit-scrollbar{display:none}
+.poster-card{min-width:280px;height:185px;border-radius:24px;flex-shrink:0;scroll-snap-align:center;position:relative;overflow:hidden;cursor:pointer;transition:transform .3s;border:1px solid rgba(255,255,255,.07)}
+.poster-card:hover{transform:scale(1.025)}
+.poster-card:active{transform:scale(.97)}
+.pbg{position:absolute;inset:0;z-index:0}
+.panim{position:absolute;inset:0;z-index:1;pointer-events:none}
+.pcontent{position:relative;z-index:2;padding:1.4rem 1.2rem;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.ptag{font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:.22rem .7rem;border-radius:50px;display:inline-flex;width:fit-content;margin-bottom:.45rem;background:rgba(255,255,255,.18);color:#fff}
+.ptitle{font-family:'Baloo 2',sans-serif;font-size:1.18rem;font-weight:800;line-height:1.25;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.psub{font-size:.73rem;color:rgba(255,255,255,.68);margin-top:.25rem}
+.fel{position:absolute;font-size:1.8rem;animation:felF var(--fd,3s) ease-in-out infinite alternate;opacity:.65}
+@keyframes felF{from{transform:translateY(0)rotate(var(--fr,0deg))}to{transform:translateY(-11px)rotate(var(--fr2,6deg))}}
+.pdots{display:flex;gap:.4rem;justify-content:center;margin-top:.6rem}
+.pdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .3s;cursor:pointer}
+.pdot.active{background:var(--orange);width:22px;border-radius:4px}
+
+/* DASHBOARD HEADING */
+.dash-h1{
+  font-family:'Baloo 2',sans-serif;font-size:clamp(1.7rem,6vw,2.4rem);font-weight:900;text-align:center;
+  background:linear-gradient(135deg,#ff6b35,#ff4757 25%,#7c4dff 60%,#00e5ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.45rem;line-height:1.2;
+  animation:dashGlow 3s ease-in-out infinite alternate;
+}
+@keyframes dashGlow{from{filter:drop-shadow(0 0 10px rgba(255,107,53,.25))}to{filter:drop-shadow(0 0 28px rgba(124,77,255,.4))}}
+.dash-sub{font-size:.9rem;color:var(--txt2);text-align:center;margin-bottom:1.8rem}
+
+/* 3D GRID */
+.grid3d{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;width:100%;max-width:480px;perspective:700px}
+.g3d{
+  border-radius:22px;padding:1.25rem 1rem;cursor:pointer;
+  border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);transform-style:preserve-3d;
+  animation:g3dIn .6s ease backwards;text-align:center;
+}
+.g3d:nth-child(1){animation-delay:.05s}.g3d:nth-child(2){animation-delay:.1s}
+.g3d:nth-child(3){animation-delay:.15s}.g3d:nth-child(4){animation-delay:.2s}
+.g3d:nth-child(5){animation-delay:.25s}.g3d:nth-child(6){animation-delay:.3s}
+@keyframes g3dIn{from{opacity:0;transform:translateY(28px)rotateX(18deg)}to{opacity:1;transform:translateY(0)rotateX(0)}}
+.g3d::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 60%);pointer-events:none}
+.g3d::after{content:'';position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.3));pointer-events:none;border-radius:0 0 22px 22px}
+.g3d:hover{transform:translateY(-8px)rotateX(6deg)rotateY(-3deg)scale(1.05)}
+.g3d:active{transform:scale(.95)}
+.g3d-ico{font-size:2.1rem;display:block;margin-bottom:.55rem;animation:icoBounce 2.2s ease-in-out infinite alternate;position:relative;z-index:1}
+@keyframes icoBounce{from{transform:translateY(0)scale(1)}to{transform:translateY(-5px)scale(1.1)}}
+.g3d-name{font-family:'Baloo 2',sans-serif;font-size:.88rem;font-weight:800;color:#fff;position:relative;z-index:1;line-height:1.2}
+.g3d-hint{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:.2rem;position:relative;z-index:1}
+.g3d-glow{position:absolute;width:70px;height:70px;border-radius:50%;filter:blur(28px);top:-12px;right:-12px;pointer-events:none;animation:glowP 3s ease-in-out infinite alternate}
+@keyframes glowP{from{opacity:.35;transform:scale(1)}to{opacity:.75;transform:scale(1.3)}}
+
+/* PAGE CONTENT */
+.page-inner{max-width:680px;margin:0 auto;padding:1.5rem 1rem 5rem}
+.page-hdr{text-align:center;padding:1.8rem 0 1.5rem}
+.page-ico{font-size:3.2rem;animation:icoBounce 2.5s ease-in-out infinite alternate;display:block;margin-bottom:.7rem}
+.page-title{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:900;margin-bottom:.45rem}
+.page-desc{font-size:.88rem;color:var(--txt2);line-height:1.7;max-width:480px;margin:0 auto}
+
+/* BACK BUTTON */
+.back-btn{
+  display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.4rem;
+  padding:.48rem 1.1rem;border-radius:50px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:var(--txt2);cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;transition:all .2s;
+}
+.back-btn:hover{background:rgba(124,77,255,.1);border-color:var(--purple);color:var(--txt)}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.3rem;margin-bottom:1.1rem;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 60%);pointer-events:none;border-radius:20px}
+.card:hover{transform:translateY(-3px)}
+.co{box-shadow:0 4px 22px rgba(255,107,53,.1)}.co:hover{box-shadow:0 12px 36px rgba(255,107,53,.2)}
+.cp{box-shadow:0 4px 22px rgba(124,77,255,.1)}.cp:hover{box-shadow:0 12px 36px rgba(124,77,255,.2)}
+.ct{box-shadow:0 4px 22px rgba(0,229,255,.08)}.ct:hover{box-shadow:0 12px 36px rgba(0,229,255,.18)}
+.cg{box-shadow:0 4px 22px rgba(105,240,174,.08)}.cg:hover{box-shadow:0 12px 36px rgba(105,240,174,.18)}
+.ck{box-shadow:0 4px 22px rgba(255,64,129,.08)}.ck:hover{box-shadow:0 12px 36px rgba(255,64,129,.18)}
+.cy{box-shadow:0 4px 22px rgba(255,215,64,.08)}.cy:hover{box-shadow:0 12px 36px rgba(255,215,64,.18)}
+.ch3{font-size:.97rem;font-weight:800;margin-bottom:.8rem}
+
+/* GRADIENT TEXT */
+.gor{background:linear-gradient(90deg,#ff6b35,#ff4757);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gpu{background:linear-gradient(90deg,#7c4dff,#2979ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gte{background:linear-gradient(90deg,#00e5ff,#69f0ae);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gpi{background:linear-gradient(90deg,#ff4081,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gye{background:linear-gradient(90deg,#ffd740,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ggr{background:linear-gradient(90deg,#69f0ae,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0}
+.fbox{width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.9rem 1.1rem;text-align:center;transition:transform .3s}
+.fbox:hover{transform:scale(1.02)}
+.fbox h4{font-size:.9rem;font-weight:800;margin-bottom:.2rem}
+.fbox p{font-size:.8rem;color:var(--txt2)}
+.farr{font-size:1.3rem;color:var(--txt3);animation:arrP 1.5s infinite;padding:.15rem}
+@keyframes arrP{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+/* STEPS */
+.stp{display:flex;gap:.9rem;margin-bottom:.9rem;align-items:flex-start}
+.snum{min-width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-size:.95rem;font-weight:800;flex-shrink:0}
+.stp h3{font-size:.9rem;font-weight:800;margin-bottom:.2rem}
+.stp p{font-size:.83rem;color:var(--txt2);line-height:1.6}
+
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;padding:.4rem 0}
+.pill{padding:.28rem .75rem;border-radius:50px;font-size:.74rem;font-weight:700}
+.pr{background:rgba(255,71,87,.1);color:#ff7585;border:1px solid rgba(255,71,87,.18)}
+.pt{background:rgba(0,229,255,.08);color:var(--teal);border:1px solid rgba(0,229,255,.16)}
+.py{background:rgba(255,215,64,.08);color:var(--yellow);border:1px solid rgba(255,215,64,.16)}
+.pg{background:rgba(105,240,174,.08);color:var(--green);border:1px solid rgba(105,240,174,.16)}
+
+/* ALGO */
+.ai{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.9rem}
+.aico{min-width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0}
+.ai h3{font-size:.88rem;font-weight:800;margin-bottom:.18rem}
+.ai p{font-size:.8rem;color:var(--txt2);line-height:1.55}
+
+/* SHORTS TIPS */
+.stip{display:flex;gap:.85rem;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.9rem;margin-bottom:.7rem;transition:all .3s}
+.stip:hover{transform:translateX(5px);border-color:var(--coral)}
+.stn{min-width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#ff4757,#ff6b35);display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;box-shadow:0 4px 12px rgba(255,71,87,.28)}
+.stip h4{font-size:.85rem;font-weight:800;margin-bottom:.18rem}
+.stip p{font-size:.78rem;color:var(--txt2);line-height:1.5}
+
+/* TAGS */
+.tgrid{display:flex;flex-wrap:wrap;gap:.4rem;padding:.4rem 0}
+.tg{padding:.28rem .75rem;border-radius:50px;font-size:.76rem;font-weight:700;cursor:pointer;background:rgba(124,77,255,.09);border:1px solid rgba(124,77,255,.22);color:#b09fff;transition:all .2s;animation:tgF 3s ease-in-out infinite alternate}
+.tg:nth-child(2n){animation-delay:.5s}.tg:nth-child(3n){animation-delay:1s}
+@keyframes tgF{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.tg:hover{background:rgba(124,77,255,.22);border-color:var(--purple);color:#fff;transform:scale(1.06)}
+
+/* SEO */
+.seo-in,.seo-sel{width:100%;background:rgba(255,255,255,.05);border:1.5px solid var(--border);border-radius:11px;padding:.75rem .9rem;color:var(--txt);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:none}
+.seo-in:focus,.seo-sel:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,77,255,.13)}
+.slbl{font-size:.7rem;font-weight:800;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.45rem;display:block}
+.sbox{margin-bottom:.9rem}
+.bigbtn{width:100%;padding:.95rem;border-radius:13px;border:none;font-family:'Baloo 2',sans-serif;font-size:.98rem;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#7c4dff,#2979ff);color:#fff;transition:all .25s;box-shadow:0 4px 18px rgba(124,77,255,.32);position:relative;overflow:hidden}
+.bigbtn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.13),transparent)}
+.bigbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,77,255,.48)}
+.bigbtn:active{transform:scale(.98)}
+.bigbtn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.sout{display:none;background:rgba(124,77,255,.07);border:1px solid rgba(124,77,255,.2);border-radius:14px;padding:1.1rem;margin-top:.9rem}
+.sout.show{display:block;animation:fadeU .4s ease}
+@keyframes fadeU{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.olbl{font-size:.68rem;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.8px;margin-bottom:.35rem}
+.otxt{font-size:.86rem;color:var(--txt);line-height:1.7;white-space:pre-wrap}
+.cpbtn{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .65rem;background:rgba(124,77,255,.1);border:1px solid rgba(124,77,255,.22);border-radius:7px;color:var(--purple);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:.35rem}
+.cpbtn:hover{background:rgba(124,77,255,.22)}
+.osec{margin-bottom:1rem}
+.osec:last-child{margin-bottom:0}
+.aerr{background:rgba(255,71,87,.09);border:1px solid rgba(255,71,87,.2);border-radius:11px;padding:.85rem;font-size:.83rem;color:#ff7585;margin-top:.7rem;display:none}
+.aerr.show{display:block;animation:fadeU .3s ease}
+
+/* ACCORDION */
+.aitem{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:.7rem;transition:all .3s}
+.ahead{display:flex;align-items:center;gap:.85rem;padding:.95rem 1.05rem;cursor:pointer;user-select:none}
+.ahead:hover{background:rgba(255,255,255,.03)}
+.aicon{font-size:1.25rem;flex-shrink:0}
+.attl{font-size:.87rem;font-weight:800;flex:1}
+.aarr{font-size:.82rem;color:var(--txt3);transition:transform .3s}
+.aitem.open .aarr{transform:rotate(180deg)}
+.abody{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 1.05rem}
+.aitem.open .abody{max-height:900px;padding:0 1.05rem 1.05rem}
+.abody ul{list-style:none;display:flex;flex-direction:column;gap:.38rem}
+.abody li{display:flex;gap:.55rem;font-size:.82rem;color:var(--txt2);line-height:1.55}
+.abody li::before{content:'✦';color:var(--orange);flex-shrink:0;margin-top:2px}
+
+/* MONEY */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem}
+.mcard{text-align:center;padding:1.05rem .85rem}
+.mico{font-size:1.75rem;display:block;margin-bottom:.38rem}
+.mtit{font-size:.82rem;font-weight:800;margin-bottom:.18rem}
+.mdesc{font-size:.72rem;color:var(--txt2);line-height:1.45}
+.mamt{font-family:'Baloo 2',sans-serif;font-size:1.05rem;font-weight:800;margin-top:.3rem}
+
+/* DIVIDER */
+.dvd{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:1.2rem 0}
+
+/* SPINNER */
+.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+footer{text-align:center;padding:2.5rem 1rem 2rem;color:var(--txt3);font-size:.76rem;border-top:1px solid var(--border);position:relative;z-index:1}
+
+@media(max-width:380px){
+  .mgrid{grid-template-columns:1fr}
+  .grid3d{grid-template-columns:1fr}
+  .poster-card{min-width:240px;height:165px}
+}
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="orb" style="width:280px;height:280px;background:rgba(255,107,53,.1);top:-80px;right:-80px;animation-duration:9s"></div>
+<div class="orb" style="width:220px;height:220px;background:rgba(124,77,255,.08);top:40%;left:-80px;animation-duration:7s;animation-delay:2s"></div>
+<div class="orb" style="width:180px;height:180px;background:rgba(0,229,255,.07);bottom:15%;right:5%;animation-duration:11s;animation-delay:4s"></div>
+
+<div id="overlay" onclick="closeSB()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-header">
+    <div class="sb-logo">🎬</div>
+    <div class="sb-title">YT Guide 2026</div>
+    <div class="sb-sub">Complete Creator Bible</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-lbl">Main</div>
+    <button class="sb-item active" data-page="dash" onclick="go('dash',this)"><span class="sb-ico">🏠</span>Dashboard<span class="sb-badge">Home</span></button>
+    <div class="sb-lbl">Sections</div>
+    <button class="sb-item" data-page="algo" onclick="go('algo',this)"><span class="sb-ico">🧠</span>Algorithm 2026</button>
+    <button class="sb-item" data-page="long" onclick="go('long',this)"><span class="sb-ico">🎥</span>Long Video Guide</button>
+    <button class="sb-item" data-page="srt" onclick="go('srt',this)"><span class="sb-ico">⚡</span>Shorts Viral Tips</button>
+    <button class="sb-item" data-page="seo" onclick="go('seo',this)"><span class="sb-ico">🤖</span>AI SEO Generator<span class="sb-badge">AI</span></button>
+    <button class="sb-item" data-page="setup" onclick="go('setup',this)"><span class="sb-ico">🛠️</span>Channel Setup</button>
+    <button class="sb-item" data-page="money" onclick="go('money',this)"><span class="sb-ico">💰</span>Monetization</button>
+  </nav>
+  <div class="sb-footer">
+    <button class="sb-close" onclick="closeSB()">✕ Sidebar Band Karo</button>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <button class="tb-menu" id="menuBtn" onclick="toggleSB()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="tb-brand" id="tb-title">🎬 YouTube 2026 Guide</div>
+  <button class="tb-back show" id="backBtn" onclick="goBack()" style="display:none">←</button>
+</header>
+
+<div id="app">
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="page-dash" class="page active">
+<div class="dash-hero">
+
+  <!-- SWIPE POSTERS -->
+  <div class="poster-wrap">
+    <div class="poster-track" id="ptrack">
+
+      <div class="poster-card" onclick="go('algo')">
+        <div class="pbg" style="background:linear-gradient(135deg,#ff6b35,#ff2752 55%,#7c1dff)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".15"><circle cx="220" cy="28" r="65" fill="#fff" opacity=".35"/><circle cx="250" cy="145" r="42" fill="#fff" opacity=".22"/><circle cx="35" cy="155" r="55" fill="#fff" opacity=".15"/></svg>
+          <div class="fel" style="top:12px;right:18px;--fd:2.5s;--fr:-5deg;--fr2:8deg">🧠</div>
+          <div class="fel" style="top:36px;right:56px;font-size:1.1rem;--fd:3.5s;animation-delay:.8s">⚡</div>
+          <div class="fel" style="top:15px;left:18px;font-size:.95rem;--fd:4s;animation-delay:.3s">📊</div>
+          <div class="fel" style="bottom:42px;right:22px;font-size:.95rem;--fd:3s;animation-delay:1s">🚀</div>
+          <div class="fel" style="bottom:55px;left:22px;font-size:.85rem;--fd:2.8s;animation-delay:1.4s">📈</div>
+        </div>
+        <div class="pcontent"><span class="ptag">2026 Algorithm</span><div class="ptitle">YouTube Algorithm Kaise Kaam Karta Hai</div><div class="psub">CTR, Watch Time, AI signals sab explained</div></div>
+      </div>
+
+      <div class="poster-card" onclick="go('srt')">
+        <div class="pbg" style="background:linear-gradient(135deg,#ff4081,#c62a6d 50%,#7c4dff)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".1"><rect x="185" y="18" width="78" height="140" rx="15" fill="#fff"/></svg>
+          <div class="fel" style="top:10px;right:18px;--fd:2s;--fr:0deg;--fr2:10deg">📱</div>
+          <div class="fel" style="top:30px;left:18px;font-size:.95rem;--fd:3s;animation-delay:.5s">🔥</div>
+          <div class="fel" style="bottom:45px;right:25px;font-size:.95rem;--fd:2.8s;animation-delay:.9s">⚡</div>
+          <div class="fel" style="top:55px;right:55px;font-size:.85rem;--fd:3.5s;animation-delay:.2s">💫</div>
+          <div class="fel" style="bottom:65px;left:28px;font-size:.8rem;--fd:2.3s;animation-delay:1.2s">🎵</div>
+        </div>
+        <div class="pcontent"><span class="ptag">Shorts Viral</span><div class="ptitle">60 Seconds Mein Lakhs Views Kaise Aate Hain</div><div class="psub">Viral formula aur title tricks 2026</div></div>
+      </div>
+
+      <div class="poster-card" onclick="go('seo')">
+        <div class="pbg" style="background:linear-gradient(135deg,#7c4dff,#2979ff 55%,#00e5ff)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".12"><path d="M0 90 Q70 38 140 90 Q210 142 280 90" stroke="#fff" stroke-width="3" fill="none"/><path d="M0 112 Q70 60 140 112 Q210 164 280 112" stroke="#fff" stroke-width="2" fill="none"/></svg>
+          <div class="fel" style="top:10px;right:14px;--fd:2.2s;--fr:-8deg;--fr2:5deg">🤖</div>
+          <div class="fel" style="top:38px;left:18px;font-size:.95rem;--fd:3.2s;animation-delay:.6s">🎯</div>
+          <div class="fel" style="bottom:40px;left:28px;font-size:.95rem;--fd:2.7s;animation-delay:1.2s">✨</div>
+          <div class="fel" style="top:18px;left:58px;font-size:.85rem;--fd:4s;animation-delay:.3s">💡</div>
+          <div class="fel" style="bottom:58px;right:22px;font-size:.8rem;--fd:3.3s;animation-delay:.9s">🔍</div>
+        </div>
+        <div class="pcontent"><span class="ptag">AI Powered</span><div class="ptitle">Claude AI Se SEO Generate Karo Abhi</div><div class="psub">Title, tags, description — real AI se</div></div>
+      </div>
+
+      <div class="poster-card" onclick="go('money')">
+        <div class="pbg" style="background:linear-gradient(135deg,#1a8c00,#00b894 50%,#00e5ff)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".1"><circle cx="240" cy="40" r="55" fill="#fff"/><circle cx="50" cy="145" r="40" fill="#fff"/></svg>
+          <div class="fel" style="top:10px;right:16px;--fd:1.8s;--fr:5deg;--fr2:-5deg">💰</div>
+          <div class="fel" style="top:33px;left:18px;font-size:.95rem;--fd:2.8s;animation-delay:.7s">💎</div>
+          <div class="fel" style="bottom:40px;right:18px;font-size:.95rem;--fd:3.3s;animation-delay:.4s">📈</div>
+          <div class="fel" style="bottom:52px;left:52px;font-size:.85rem;--fd:2.5s;animation-delay:1.1s">🤑</div>
+          <div class="fel" style="top:55px;right:52px;font-size:.75rem;--fd:3.8s;animation-delay:.6s">💸</div>
+        </div>
+        <div class="pcontent"><span class="ptag">Monetize</span><div class="ptitle">₹5L/Month YouTube Se Kaise Kamao</div><div class="psub">7 income streams completely explained</div></div>
+      </div>
+
+      <div class="poster-card" onclick="go('setup')">
+        <div class="pbg" style="background:linear-gradient(135deg,#e65c00,#f9a825 60%,#ffd740)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".1"><rect x="15" y="25" width="240" height="135" rx="20" fill="#fff"/></svg>
+          <div class="fel" style="top:10px;right:14px;--fd:2.5s;--fr:-3deg;--fr2:8deg">🛠️</div>
+          <div class="fel" style="top:36px;left:16px;font-size:.95rem;--fd:3.5s;animation-delay:.8s">🎙️</div>
+          <div class="fel" style="bottom:42px;right:22px;font-size:.95rem;--fd:2.9s;animation-delay:.4s">📷</div>
+          <div class="fel" style="top:14px;left:52px;font-size:.85rem;--fd:3.8s;animation-delay:1.3s">💡</div>
+          <div class="fel" style="bottom:60px;left:26px;font-size:.75rem;--fd:2.4s;animation-delay:1.6s">🎬</div>
+        </div>
+        <div class="pcontent"><span class="ptag" style="background:rgba(0,0,0,.2)">Setup Guide</span><div class="ptitle">Zero Se Pro Channel Setup Karo Aaj</div><div class="psub">Camera, mic, editing tools sab kuch</div></div>
+      </div>
+
+      <div class="poster-card" onclick="go('long')">
+        <div class="pbg" style="background:linear-gradient(135deg,#00838f,#0288d1 55%,#7c4dff)"></div>
+        <div class="panim">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 185" opacity=".1"><rect x="30" y="30" width="220" height="125" rx="12" fill="#fff"/><circle cx="75" cy="92" r="30" fill="#000" opacity=".3"/></svg>
+          <div class="fel" style="top:10px;right:14px;--fd:2.3s;--fr:-6deg;--fr2:7deg">🎥</div>
+          <div class="fel" style="top:34px;left:16px;font-size:.95rem;--fd:3.3s;animation-delay:.7s">🎬</div>
+          <div class="fel" style="bottom:42px;right:20px;font-size:.95rem;--fd:2.7s;animation-delay:.5s">✂️</div>
+          <div class="fel" style="top:14px;left:50px;font-size:.85rem;--fd:4s;animation-delay:.2s">🎭</div>
+          <div class="fel" style="bottom:58px;left:25px;font-size:.75rem;--fd:3.1s;animation-delay:1.4s">🖥️</div>
+        </div>
+        <div class="pcontent"><span class="ptag">Long Videos</span><div class="ptitle">Viral Long Video Kaise Banayein 2026</div><div class="psub">Idea se upload tak — complete 7-step guide</div></div>
+      </div>
+
+    </div>
+    <div class="pdots" id="pdots">
+      <div class="pdot active" onclick="scrollP(0)"></div>
+      <div class="pdot" onclick="scrollP(1)"></div>
+      <div class="pdot" onclick="scrollP(2)"></div>
+      <div class="pdot" onclick="scrollP(3)"></div>
+      <div class="pdot" onclick="scrollP(4)"></div>
+      <div class="pdot" onclick="scrollP(5)"></div>
+    </div>
+  </div>
+
+  <h1 class="dash-h1">YouTube Creator<br>Bible 2026</h1>
+  <p class="dash-sub">Ek jagah — sab kuch seekho 🚀</p>
+
+  <!-- 3D CARDS -->
+  <div class="grid3d">
+    <div class="g3d" style="background:linear-gradient(135deg,#1a0a00,#2d1400)" onclick="go('algo')">
+      <div class="g3d-glow" style="background:rgba(255,107,53,.65)"></div>
+      <span class="g3d-ico" style="animation-delay:.05s">🧠</span>
+      <div class="g3d-name gor">Algorithm</div><div class="g3d-hint">2026 Secrets</div>
+    </div>
+    <div class="g3d" style="background:linear-gradient(135deg,#030018,#0e0032)" onclick="go('long')">
+      <div class="g3d-glow" style="background:rgba(124,77,255,.65)"></div>
+      <span class="g3d-ico" style="animation-delay:.1s">🎥</span>
+      <div class="g3d-name gpu">Long Video</div><div class="g3d-hint">Full Guide</div>
+    </div>
+    <div class="g3d" style="background:linear-gradient(135deg,#001218,#002440)" onclick="go('srt')">
+      <div class="g3d-glow" style="background:rgba(0,229,255,.55)"></div>
+      <span class="g3d-ico" style="animation-delay:.15s">⚡</span>
+      <div class="g3d-name gte">Shorts</div><div class="g3d-hint">Viral Tips</div>
+    </div>
+    <div class="g3d" style="background:linear-gradient(135deg,#1a001a,#300036)" onclick="go('seo')">
+      <div class="g3d-glow" style="background:rgba(255,64,129,.55)"></div>
+      <span class="g3d-ico" style="animation-delay:.2s">🤖</span>
+      <div class="g3d-name gpi">AI SEO</div><div class="g3d-hint">Generator</div>
+    </div>
+    <div class="g3d" style="background:linear-gradient(135deg,#0c0800,#1c1400)" onclick="go('setup')">
+      <div class="g3d-glow" style="background:rgba(255,215,64,.55)"></div>
+      <span class="g3d-ico" style="animation-delay:.25s">🛠️</span>
+      <div class="g3d-name gye">Setup</div><div class="g3d-hint">Channel Guide</div>
+    </div>
+    <div class="g3d" style="background:linear-gradient(135deg,#001a0a,#002e18)" onclick="go('money')">
+      <div class="g3d-glow" style="background:rgba(105,240,174,.55)"></div>
+      <span class="g3d-ico" style="animation-delay:.3s">💰</span>
+      <div class="g3d-name ggr">Monetize</div><div class="g3d-hint">Income Streams</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ ALGORITHM ═══ -->
+<div id="page-algo" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">🧠</span><h2 class="page-title gor">Algorithm 2026</h2><p class="page-desc">YouTube ka AI ab bahut smart ho gaya — deep engagement dekhta hai har video mein</p></div>
+
+  <div class="flow" style="margin-bottom:1.2rem">
+    <div class="fbox co"><h4 style="color:var(--orange)">📤 Video Upload</h4><p>AI scan karta hai — thumbnail, title, audio, transcript sab analyze hota hai pehle hi second mein</p></div>
+    <div class="farr">↓</div>
+    <div class="fbox cp"><h4 style="color:var(--purple)">🧪 Testing Phase</h4><p>Chote group ko dikhaya jata hai — CTR aur watch time real-time mein track hota hai automatically</p></div>
+    <div class="farr">↓</div>
+    <div class="fbox ct"><h4 style="color:var(--teal)">📈 Scale Phase</h4><p>Agar data acha hai toh algorithm aur zyada logon ko push karta hai — suggested feed mein aata hai</p></div>
+    <div class="farr">↓</div>
+    <div class="fbox cg"><h4 style="color:var(--green)">🌍 Viral Loop</h4><p>Suggested, Search, Shorts feed — teen jagah se traffic aata hai aur loop chalta rehta hai</p></div>
+  </div>
+
+  <div class="card co">
+    <div class="ch3 gor">🎯 Top Algorithm Signals 2026</div>
+    <div class="ai"><div class="aico" style="background:rgba(255,107,53,.1)">👁️</div><div><h3 style="color:var(--orange)">Click-Through Rate (CTR)</h3><p>Thumbnail + title se kitne log click karte hain. 6–10% achha CTR hai. A/B test karo thumbnail ko.</p></div></div>
+    <div class="ai"><div class="aico" style="background:rgba(124,77,255,.1)">⏱️</div><div><h3 style="color:var(--purple)">Watch Time & AVD</h3><p>Average View Duration — 50%+ rakhne ki koshish karo. Pehle 30 seconds most critical hote hain.</p></div></div>
+    <div class="ai"><div class="aico" style="background:rgba(0,229,255,.08)">💬</div><div><h3 style="color:var(--teal)">Engagement Signals</h3><p>Likes, comments, shares aur saves — sab count hota hai. Comments pe reply karo — big boost milta hai.</p></div></div>
+    <div class="ai"><div class="aico" style="background:rgba(105,240,174,.08)">🔔</div><div><h3 style="color:var(--green)">Subscriber Loyalty</h3><p>Kya subscribers baar baar aate hain? Consistency se loyal audience banti hai jo algorithm boost karti hai.</p></div></div>
+    <div class="ai"><div class="aico" style="background:rgba(255,215,64,.08)">🤖</div><div><h3 style="color:var(--yellow)">AI Semantic Understanding</h3><p>YT ka AI 2026 mein video topic khud samajhta hai. Natural language use karo — keyword stuffing dead hai.</p></div></div>
+    <div class="ai" style="margin-bottom:0"><div class="aico" style="background:rgba(255,64,129,.08)">📱</div><div><h3 style="color:var(--pink)">Session Time</h3><p>User aapki video ke baad YouTube pe rahe — channel promote hota hai automatically. End screens use karo.</p></div></div>
+  </div>
+
+  <div class="card cp">
+    <div class="ch3 gpu">⚡ Quick Tips 2026</div>
+    <div class="pills"><span class="pill pt">Pehle 30 sec important</span><span class="pill pr">Click bait avoid karo</span><span class="pill py">Upload: 12–3pm IST</span><span class="pill pg">Weekly 2–3 videos</span><span class="pill pt">Chapters add karo</span><span class="pill pr">Community posts karo</span><span class="pill py">Pinned comment lagao</span><span class="pill pg">Shorts + Long dono karo</span></div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+<!-- ═══ LONG VIDEO ═══ -->
+<div id="page-long" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">🎥</span><h2 class="page-title gte">Long Video Guide</h2><p class="page-desc">Idea se upload tak — step-by-step 2026 ka proven formula</p></div>
+
+  <div class="card ct">
+    <div class="ch3 gte">📋 7-Step Viral Formula</div>
+    <div class="stp"><div class="snum" style="background:rgba(0,229,255,.12);color:var(--teal)">1</div><div><h3 style="color:var(--teal)">Niche aur Topic Research</h3><p>VidIQ ya TubeBuddy se trending topics dhundho. 3–5 competitor channels analyze karo. 20 ideas pehle se list karo.</p></div></div>
+    <div class="stp"><div class="snum" style="background:rgba(255,107,53,.12);color:var(--orange)">2</div><div><h3 style="color:var(--orange)">Powerful Hook (0–30 sec)</h3><p>Problem → Promise formula use karo. "Yeh mistake mat karna..." ya "Main aapko aaj bata dunga..." — viewers rukte hain.</p></div></div>
+    <div class="stp"><div class="snum" style="background:rgba(124,77,255,.12);color:var(--purple)">3</div><div><h3 style="color:var(--purple)">Script Structure Banao</h3><p>Hook → Problem → Solution → Proof → CTA — 5-part formula. Har 3–4 min pe new point. B-roll plan karo pehle se.</p></div></div>
+    <div class="stp"><div class="snum" style="background:rgba(105,240,174,.12);color:var(--green)">4</div><div><h3 style="color:var(--green)">Shooting Setup</h3><p>Window ke samne natural light. Boya ya RODE mic use karo. 1080p minimum, 4K preferred. Clean background zaroori.</p></div></div>
+    <div class="stp"><div class="snum" style="background:rgba(255,64,129,.12);color:var(--pink)">5</div><div><h3 style="color:var(--pink)">Editing Tips</h3><p>Jump cuts har 3–4 sec. Text overlays add karo. CapCut, DaVinci ya Premiere use karo. Auto captions lagao — 40% boost.</p></div></div>
+    <div class="stp"><div class="snum" style="background:rgba(0,229,255,.12);color:var(--teal)">6</div><div><h3 style="color:var(--teal)">Viral Thumbnail Banao</h3><p>Face + Emotion + Text = winning combo. 3 fonts max, 3 colors max. Mobile pe test karo. Studio se A/B test karo.</p></div></div>
+    <div class="stp" style="margin-bottom:0"><div class="snum" style="background:rgba(255,107,53,.12);color:var(--orange)">7</div><div><h3 style="color:var(--orange)">Upload + Optimize</h3><p>Chapters add karo. Description pehli 2 lines mein keywords. End screens aur cards. Community post ke saath launch.</p></div></div>
+  </div>
+
+  <div class="card co">
+    <div class="ch3 gor">⏱️ Best Video Length 2026</div>
+    <div class="flow">
+      <div class="fbox"><h4 style="color:var(--teal)">8–12 min</h4><p>Tutorial aur tips videos — best AVD percentage milti hai consistently</p></div>
+      <div class="farr">↕</div>
+      <div class="fbox"><h4 style="color:var(--orange)">15–20 min</h4><p>In-depth guides — higher watch time = more AdSense revenue guaranteed</p></div>
+      <div class="farr">↕</div>
+      <div class="fbox"><h4 style="color:var(--purple)">30–60 min</h4><p>Documentary style — super fans ke liye. Channel membership badhta hai.</p></div>
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+<!-- ═══ SHORTS ═══ -->
+<div id="page-srt" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">⚡</span><h2 class="page-title gpi">Shorts Viral Guide</h2><p class="page-desc">60 seconds mein lakhs views — 2026 ka proven formula</p></div>
+
+  <div class="card ck">
+    <div class="ch3 gpi">📱 Sahi Upload Tarika</div>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <div style="display:flex;gap:.75rem;align-items:flex-start"><span style="font-size:1.15rem;min-width:27px">📐</span><div><strong style="font-size:.86rem">Format:</strong><span style="font-size:.82rem;color:var(--txt2)"> 9:16 ratio (1080×1920), vertical, 15–60 seconds. Title mein #Shorts likho zaroor.</span></div></div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start"><span style="font-size:1.15rem;min-width:27px">🎵</span><div><strong style="font-size:.86rem">Audio:</strong><span style="font-size:.82rem;color:var(--txt2)"> Trending music ya voiceover. YouTube built-in audio library best hai. No copyrighted music.</span></div></div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start"><span style="font-size:1.15rem;min-width:27px">⏰</span><div><strong style="font-size:.86rem">Upload Time:</strong><span style="font-size:.82rem;color:var(--txt2)"> India ke liye: 7–9am, 12–2pm, ya 7–10pm. Daily ya 3x/week target rakho.</span></div></div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start"><span style="font-size:1.15rem;min-width:27px">🏷️</span><div><strong style="font-size:.86rem">Tags:</strong><span style="font-size:.82rem;color:var(--txt2)"> #Shorts #[Niche] #Viral — 3–5 tags kafi hain. Description mein 1–2 lines + links daalo.</span></div></div>
+    </div>
+  </div>
+
+  <div class="ch3" style="margin-bottom:.75rem;font-size:.92rem">🔥 Viral Title Formulas</div>
+  <div class="stip"><div class="stn">1</div><div><h4>Number + Benefit</h4><p>"5 Tarike Paise Kamane Ke" — numbers trust aur curiosity dono badhate hain viewers mein.</p></div></div>
+  <div class="stip"><div class="stn">2</div><div><h4>Shock / Curiosity Gap</h4><p>"Yeh Mat Karo Kabhi Bhi!" — log jaanna chahte hain kya galat hai aur swipe nahi karte.</p></div></div>
+  <div class="stip"><div class="stn">3</div><div><h4>Before & After</h4><p>"Sirf 30 Din Mein..." — transformation content highest watch time aur shares deta hai.</p></div></div>
+  <div class="stip"><div class="stn">4</div><div><h4>Question Format</h4><p>"Kya Aap Yeh Jaante Ho?" — viewer khud se poochta hai aur automatically rukta hai dekhne ke liye.</p></div></div>
+  <div class="stip"><div class="stn">5</div><div><h4>Trending + Niche Mix</h4><p>Current events + apni niche = mega viral potential. Speed matters — pehle upload karo topic pe.</p></div></div>
+
+  <div class="card co" style="margin-top:1rem">
+    <div class="ch3 gor">🎯 Algorithm Tips</div>
+    <div class="pills"><span class="pill pr">1st second mein hook</span><span class="pill pt">Loop create karo</span><span class="pill py">Captions mandatory</span><span class="pill pg">Trending audio use karo</span><span class="pill pr">Comment bait lagao</span><span class="pill pt">Series banao</span><span class="pill py">Long se clip kato</span><span class="pill pg">Daily consistency = growth</span></div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+<!-- ═══ SEO ═══ -->
+<div id="page-seo" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">🤖</span><h2 class="page-title gpu">AI SEO Generator</h2><p class="page-desc">Topic dalo — Claude AI real-time mein title, tags, description generate karega</p></div>
+
+  <div class="card cp">
+    <div class="sbox"><span class="slbl">📝 Aapka Video Topic</span><textarea class="seo-in" id="stopic" rows="2" placeholder="e.g. iPhone tips, Cooking recipes, Cricket highlights, Motivation..."></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.9rem">
+      <div><span class="slbl">📂 Video Type</span><select class="seo-sel" id="stype"><option value="long">Long Video</option><option value="short">Shorts</option><option value="tutorial">Tutorial</option><option value="vlog">Vlog</option><option value="news">News</option></select></div>
+      <div><span class="slbl">🌐 Language</span><select class="seo-sel" id="slang"><option value="hindi">Hindi</option><option value="english">English</option><option value="hinglish">Hinglish</option></select></div>
+    </div>
+    <button class="bigbtn" id="seo-btn" onclick="genSEO()"><span id="btn-txt">✨ AI SEO Generate Karo</span></button>
+    <div class="aerr" id="aerr"></div>
+    <div class="sout" id="sout">
+      <div class="osec"><div class="olbl">🏆 Viral Titles</div><div class="otxt" id="ot"></div><button class="cpbtn" onclick="cpEl('ot')">📋 Copy</button></div>
+      <div class="osec"><div class="olbl">🔍 SEO Tags</div><div class="otxt" id="otg"></div><button class="cpbtn" onclick="cpEl('otg')">📋 Copy</button></div>
+      <div class="osec"><div class="olbl">📄 Description</div><div class="otxt" id="od"></div><button class="cpbtn" onclick="cpEl('od')">📋 Copy</button></div>
+      <div class="osec"><div class="olbl">🎣 Hook Script</div><div class="otxt" id="oh"></div><button class="cpbtn" onclick="cpEl('oh')">📋 Copy</button></div>
+      <div class="osec"><div class="olbl">📌 Thumbnail Text</div><div class="otxt" id="othm"></div></div>
+    </div>
+  </div>
+
+  <div class="ch3" style="font-size:.86rem;color:var(--txt2);margin-bottom:.65rem">💡 Popular Tags 2026 — tap to copy</div>
+  <div class="tgrid">
+    <span class="tg" onclick="cpTag(this)">#Shorts</span><span class="tg" onclick="cpTag(this)">#Viral</span><span class="tg" onclick="cpTag(this)">#YouTubeIndia</span><span class="tg" onclick="cpTag(this)">#HindiContent</span><span class="tg" onclick="cpTag(this)">#TechTips</span><span class="tg" onclick="cpTag(this)">#MotivationHindi</span><span class="tg" onclick="cpTag(this)">#StudyTips</span><span class="tg" onclick="cpTag(this)">#MakeMoney</span><span class="tg" onclick="cpTag(this)">#Gaming</span><span class="tg" onclick="cpTag(this)">#Cricket2026</span><span class="tg" onclick="cpTag(this)">#Cooking</span><span class="tg" onclick="cpTag(this)">#DIY</span><span class="tg" onclick="cpTag(this)">#Finance</span><span class="tg" onclick="cpTag(this)">#Fitness</span><span class="tg" onclick="cpTag(this)">#Travel</span><span class="tg" onclick="cpTag(this)">#BeautyTips</span><span class="tg" onclick="cpTag(this)">#Education</span><span class="tg" onclick="cpTag(this)">#Comedy</span>
+  </div>
+
+  <button class="back-btn" onclick="goBack()" style="margin-top:1.2rem">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+<!-- ═══ SETUP ═══ -->
+<div id="page-setup" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">🛠️</span><h2 class="page-title gye">Complete Setup Guide</h2><p class="page-desc">Zero se professional YouTube channel — sab kuch yahan step by step</p></div>
+
+  <div class="aitem open" id="a1">
+    <div class="ahead" onclick="tAcc('a1')"><span class="aicon">📱</span><span class="attl">Channel Banana aur Optimize Karna</span><span class="aarr">▼</span></div>
+    <div class="abody"><ul><li>Google account se YouTube.com → profile icon → "Create a channel" — 2 minute ka kaam hai.</li><li>Channel name: niche + personality ya brand name. Badalne mein time lagta hai — soch ke rakho.</li><li>Channel art: 2560×1440px banner — Canva free template use karo. Mobile aur TV pe check karo.</li><li>Profile picture: 800×800px, clear face ya logo. Round crop hogi isliye center mein rakho face.</li><li>Description: pehli 2 lines mein keywords — yeh Google search mein bhi dikhti hain.</li><li>Custom URL: 100 subscribers ke baad milta hai @YourName format. Pehle se plan karo name.</li></ul></div>
+  </div>
+
+  <div class="aitem" id="a2">
+    <div class="ahead" onclick="tAcc('a2')"><span class="aicon">🎙️</span><span class="attl">Camera, Mic aur Lighting Setup</span><span class="aarr">▼</span></div>
+    <div class="abody"><ul><li>Phone Camera: iPhone 13+ ya Samsung S21+ — aaj ke liye bilkul kafi hai. Gimbal lo (₹1500–3000).</li><li>Budget Mic (₹1000–2000): Boya BY-M1 Lapel — Amazon pe milti hai. Audio = 70% viewer experience.</li><li>Mid Range (₹3000–6000): RODE VideoMicro ya Blue Snowball USB mic for voiceover recording.</li><li>Lighting: Window ki natural light best. Ring light ₹1200–2500. Softbox set ₹4000+ for pro look.</li><li>Free Editing: CapCut (mobile/PC), DaVinci Resolve (PC) — dono professional quality dete hain.</li><li>Thumbnail: Canva free plan kafi hai start mein. Photoshop better aur faster results deta hai.</li></ul></div>
+  </div>
+
+  <div class="aitem" id="a3">
+    <div class="ahead" onclick="tAcc('a3')"><span class="aicon">📊</span><span class="attl">YouTube Studio — Sab Kuch Samjho</span><span class="aarr">▼</span></div>
+    <div class="abody"><ul><li>Dashboard: Recent performance, subscriber count, news — yahan se start karo apna din har roz.</li><li>Analytics: Reach → Engagement → Audience — teen tabs most important hain. Weekly check karo.</li><li>CTR: 4% average, 6%+ good, 10%+ excellent. CTR low hai toh thumbnail turant badlo.</li><li>AVD: Agar 40%+ hai toh acha hai. Drop kahan hota hai — Analytics mein precisely dekh sakte ho.</li><li>Traffic Sources: Suggested, Search, External — kahan se views aa rahe hain track karo weekly.</li><li>A/B Thumbnail Test: Experimental tab mein — do thumbnails test karo, winner automatically set hota hai.</li></ul></div>
+  </div>
+
+  <div class="aitem" id="a4">
+    <div class="ahead" onclick="tAcc('a4')"><span class="aicon">🔧</span><span class="attl">Best Creator Tools 2026</span><span class="aarr">▼</span></div>
+    <div class="abody"><ul><li>VidIQ (Free+Paid): Keyword research, competitor analysis, daily ideas — must-have browser extension.</li><li>TubeBuddy: Tag suggestions, A/B testing, bulk editing. Free plan kafi hai beginners ke liye.</li><li>Google Trends: Trending topics ka free real-time data. Seasonality samajhne ke liye best.</li><li>Notion/Trello: Content calendar — 30 video ideas pehle se plan karo systematic tarike se.</li><li>Canva Pro: Thumbnails, channel art, community post graphics — sab ek jagah professionally.</li><li>Social Blade: Competitor channels ka data — growth rate, estimated earnings sab dikhta hai free mein.</li></ul></div>
+  </div>
+
+  <div class="aitem" id="a5">
+    <div class="ahead" onclick="tAcc('a5')"><span class="aicon">📅</span><span class="attl">Content Calendar aur Consistency</span><span class="aarr">▼</span></div>
+    <div class="abody"><ul><li>Month 1: Ek niche pe focus karo — 8–12 videos. Quality over quantity. Formats experiment karo.</li><li>Month 2–3: Weekly 2x upload target. Long + Shorts mix. Community posts har 3 din mein.</li><li>Batch recording: Ek din mein 3–4 videos shoot karo — weekly pressure nahi rahega phir.</li><li>Content pillars: 3 types — Educational 60%, Entertainment 30%, Promotional 10% ratio rakho.</li><li>Seasonal planning: IPL, Festivals, Board exams — trending time pe pehle se videos ready rakho.</li><li>Re-purpose: Long video se 3–5 Shorts nikalo. Audio se podcast. Thumbnail se blog post banao.</li></ul></div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+<!-- ═══ MONETIZE ═══ -->
+<div id="page-money" class="page">
+<div class="page-inner">
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+  <div class="page-hdr"><span class="page-ico">💰</span><h2 class="page-title ggr">Paise Kaise Kamao</h2><p class="page-desc">Sirf AdSense nahi — 6 alag income streams YouTube creators ke liye 2026 mein</p></div>
+
+  <div class="mgrid">
+    <div class="card cy mcard"><span class="mico">📺</span><div class="mtit">AdSense</div><div class="mdesc">1000 subs + 4000 hrs. India CPM ₹50–300/1000 views</div><div class="mamt" style="color:var(--yellow)">₹50–500/day</div></div>
+    <div class="card cg mcard"><span class="mico">🤝</span><div class="mtit">Brand Deals</div><div class="mdesc">10K+ subs pe brands contact karte hain. Niche = higher rates</div><div class="mamt" style="color:var(--green)">₹5K–5L/video</div></div>
+    <div class="card co mcard"><span class="mico">📦</span><div class="mtit">Affiliate</div><div class="mdesc">Amazon, Flipkart links. Commission 3–10%. Passive income.</div><div class="mamt" style="color:var(--orange)">₹1K–50K/month</div></div>
+    <div class="card cp mcard"><span class="mico">🎓</span><div class="mtit">Courses</div><div class="mdesc">Expertise ka course banao. Teachable ya direct sell karo.</div><div class="mamt" style="color:var(--purple)">₹10K–5L/launch</div></div>
+    <div class="card ct mcard"><span class="mico">💎</span><div class="mtit">Memberships</div><div class="mdesc">Super Thanks, Super Chat, Channel Membership direct fans se</div><div class="mamt" style="color:var(--teal)">₹500–50K/month</div></div>
+    <div class="card ck mcard"><span class="mico">🛒</span><div class="mtit">Merch</div><div class="mdesc">T-shirts, mugs — Printrove ya Merch by Amazon use karo.</div><div class="mamt" style="color:var(--pink)">₹2K–2L/month</div></div>
+  </div>
+
+  <div class="card ct">
+    <div class="ch3 gte">🏆 YPP Requirements 2026</div>
+    <div class="flow">
+      <div class="fbox"><h4 style="color:var(--teal)">Standard YPP (Ads)</h4><p>1,000 subscribers + 4,000 watch hours (12 months) <strong>OR</strong> 10M Shorts views (90 days)</p></div>
+      <div class="farr">↓</div>
+      <div class="fbox"><h4 style="color:var(--green)">Expanded YPP (Full)</h4><p>10,000 subscribers — Super Thanks, Channel Membership, Shopping sab unlock ho jata hai</p></div>
+    </div>
+  </div>
+
+  <div class="card co">
+    <div class="ch3 gor">🗺️ Creator Income Roadmap</div>
+    <div class="stp" style="margin-bottom:.9rem"><div class="snum" style="background:rgba(255,107,53,.12);color:var(--orange);font-size:.78rem;letter-spacing:-.5px">0–1K</div><div><h3 style="color:var(--orange)">Foundation Phase</h3><p>Content quality + consistency pe focus. Affiliate links start karo. Brand outreach abhi mat karo — pehle audience banao.</p></div></div>
+    <div class="stp" style="margin-bottom:.9rem"><div class="snum" style="background:rgba(255,215,64,.12);color:var(--yellow);font-size:.76px;letter-spacing:-.5px">1K–10K</div><div><h3 style="color:var(--yellow)">Growth Phase</h3><p>AdSense start hoga. Small brand deals ₹2K–10K per video. Email list banana shuru karo. Community build karo.</p></div></div>
+    <div class="stp" style="margin-bottom:.9rem"><div class="snum" style="background:rgba(105,240,174,.12);color:var(--green);font-size:.72rem;letter-spacing:-.5px">10K–100K</div><div><h3 style="color:var(--green)">Scale Phase</h3><p>Full YPP. Big brand deals ₹20K–2L. Course launch karo. Membership program start karo. ₹50K–5L/month possible.</p></div></div>
+    <div class="stp" style="margin-bottom:0"><div class="snum" style="background:rgba(0,229,255,.12);color:var(--teal);font-size:.76rem;letter-spacing:-.5px">100K+</div><div><h3 style="color:var(--teal)">Empire Phase</h3><p>Multiple income streams. Team hire karo. Own products launch karo. ₹5L–50L/month top creators ke liye bilkul realistic.</p></div></div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">← Dashboard Pe Wapas Jao</button>
+</div>
+</div>
+
+</div><!-- /app -->
+
+<footer>
+  <div style="font-size:1.4rem;margin-bottom:.4rem">🎬</div>
+  <p style="color:var(--txt2);margin-bottom:.25rem">YouTube 2026 Full Creator Guide</p>
+  <p>Powered by <strong style="color:var(--orange)">Claude AI</strong> — Anthropic</p>
+</footer>
+
+<script>
+// Stars
+const sEl=document.getElementById('stars');
+for(let i=0;i<70;i++){const s=document.createElement('div');s.className='star';const z=Math.random()*2.5+.5;s.style.cssText=`width:${z}px;height:${z}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${.12+Math.random()*0.45}`;sEl.appendChild(s);}
+
+// Page system
+let cur='dash';let hist=['dash'];
+const pgNames={dash:'🏠 Dashboard',algo:'🧠 Algorithm',long:'🎥 Long Video',srt:'⚡ Shorts',seo:'🤖 AI SEO',setup:'🛠️ Setup',money:'💰 Monetize'};
+
+function go(page,sbEl){
+  if(page===cur){closeSB();return;}
+  document.getElementById('page-'+cur).classList.remove('active');
+  document.getElementById('page-'+page).classList.add('active');
+  if(hist[hist.length-1]!==page)hist.push(page);
+  cur=page;
+  document.getElementById('tb-title').textContent=pgNames[page]||page;
+  const bb=document.getElementById('backBtn');
+  if(page==='dash'){bb.style.display='none';}else{bb.style.display='flex';}
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  closeSB();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function goBack(){
+  if(hist.length>1){
+    hist.pop();
+    const prev=hist[hist.length-1];
+    document.getElementById('page-'+cur).classList.remove('active');
+    const t=document.getElementById('page-'+prev);
+    t.style.animation='none';t.classList.add('active');setTimeout(()=>t.style.animation='',10);
+    cur=prev;
+    document.getElementById('tb-title').textContent=pgNames[prev]||'🏠 Dashboard';
+    const bb=document.getElementById('backBtn');
+    if(prev==='dash'){bb.style.display='none';}else{bb.style.display='flex';}
+    document.querySelectorAll('.sb-item').forEach(b=>b.classList.toggle('active',b.dataset.page===prev));
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+}
+
+// Sidebar
+function toggleSB(){
+  const sb=document.getElementById('sidebar'),ov=document.getElementById('overlay'),mb=document.getElementById('menuBtn');
+  const o=sb.classList.toggle('open');ov.classList.toggle('show',o);mb.classList.toggle('open',o);
+}
+function closeSB(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('menuBtn').classList.remove('open');
+}
+
+// Accordion
+function tAcc(id){document.getElementById(id).classList.toggle('open')}
+
+// 3D Tilt
+document.querySelectorAll('.g3d').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(550px)rotateX(${-y*12}deg)rotateY(${x*12}deg)translateY(-7px)scale(1.06)`;});
+  c.addEventListener('mouseleave',()=>c.style.transform='');
+});
+
+// Poster auto-scroll
+const pt=document.getElementById('ptrack'),pds=document.querySelectorAll('.pdot');
+let pCur=0,paused=false,rt;
+function scrollP(i){const cs=pt.querySelectorAll('.poster-card');if(cs[i])pt.scrollTo({left:cs[i].offsetLeft-cs[0].parentElement.parentElement.offsetLeft,behavior:'smooth'});}
+pt.addEventListener('scroll',()=>{
+  const cs=pt.querySelectorAll('.poster-card'),sl=pt.scrollLeft;
+  let cl=0,md=Infinity;
+  cs.forEach((c,i)=>{const d=Math.abs(c.offsetLeft-sl);if(d<md){md=d;cl=i;}});
+  if(cl!==pCur){pds[pCur].classList.remove('active');pds[cl].classList.add('active');pCur=cl;}
+},{passive:true});
+pt.addEventListener('touchstart',()=>{paused=true;clearTimeout(rt);},{passive:true});
+pt.addEventListener('touchend',()=>{rt=setTimeout(()=>paused=false,3000);},{passive:true});
+setInterval(()=>{if(paused)return;const cs=pt.querySelectorAll('.poster-card');scrollP((pCur+1)%cs.length);},3800);
+
+// Copy
+function cpEl(id){const t=document.getElementById(id).textContent;navigator.clipboard.writeText(t).then(()=>{const b=event.target,o=b.textContent;b.textContent='✅ Copied!';setTimeout(()=>b.textContent=o,2000);});}
+function cpTag(el){navigator.clipboard.writeText(el.textContent).then(()=>{const o=el.textContent;el.textContent='✅';el.style.background='rgba(105,240,174,.2)';setTimeout(()=>{el.textContent=o;el.style.background='';},1500);});}
+
+// SEO
+async function genSEO(){
+  const topic=document.getElementById('stopic').value.trim();
+  if(!topic){document.getElementById('stopic').style.borderColor='var(--coral)';setTimeout(()=>document.getElementById('stopic').style.borderColor='',2000);return;}
+  const type=document.getElementById('stype').value,lang=document.getElementById('slang').value;
+  const btn=document.getElementById('seo-btn'),btxt=document.getElementById('btn-txt');
+  const aer=document.getElementById('aerr'),sout=document.getElementById('sout');
+  btn.disabled=true;btxt.innerHTML='<span class="spin"></span>AI Generate Kar Raha Hai...';
+  aer.classList.remove('show');sout.classList.remove('show');
+  const prompt=`You are an expert YouTube SEO specialist for Indian creators in 2026. Topic: "${topic}", Type: ${type}, Language: ${lang}.
+Generate in ${lang}. Format EXACTLY:
+TITLES:
+[3 viral titles numbered 1. 2. 3.]
+TAGS:
+[20 SEO tags comma separated]
+DESCRIPTION:
+[150-word SEO description]
+HOOK:
+[15-second opening script]
+THUMBNAIL:
+[3-5 bold words]`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API Error '+r.status);}
+    const d=await r.json(),text=d.content.map(c=>c.text||'').join('');
+    function ext(t,k){const m=t.match(new RegExp(k+':\\s*([\\s\\S]*?)(?=\\n[A-Z]+:|$)'));return m?m[1].trim():'';}
+    document.getElementById('ot').textContent=ext(text,'TITLES');
+    document.getElementById('otg').textContent=ext(text,'TAGS');
+    document.getElementById('od').textContent=ext(text,'DESCRIPTION');
+    document.getElementById('oh').textContent=ext(text,'HOOK');
+    document.getElementById('othm').textContent=ext(text,'THUMBNAIL');
+    sout.classList.add('show');
+  }catch(e){
+    aer.textContent='⚠️ '+(e.message||'Network error. Check connection.');
+    aer.classList.add('show');
+  }finally{btn.disabled=false;btxt.textContent='✨ AI SEO Generate Karo';}
+}
+document.getElementById('stopic').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();genSEO();}});
+
+// Swipe to go back
+let tx=0;
+document.getElementById('app').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.getElementById('app').addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-tx>65&&cur!=='dash')goBack();},{passive:true});
+
+// Keyboard ESC closes sidebar
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSB();});
+</script>
+</body>
+</html>
